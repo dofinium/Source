@@ -310,17 +310,6 @@
     <Content Include="Content\themes\base\tabs.css" />
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
-    <Content Include="doc\1_home.PNG" />
-    <Content Include="doc\2_select_ticket.png" />
-    <Content Include="doc\3_service_selected.png" />
-    <Content Include="doc\4_qualityisbad.png" />
-    <Content Include="doc\5_cities_stat.png" />
-    <Content Include="doc\6_organizations_stat.png" />
-    <Content Include="doc\7_org_stat2.png" />
-    <Content Include="doc\8_worker_stat.png" />
-    <Content Include="doc\9_references.PNG" />
-    <Content Include="doc\Description.PNG" />
-    <Content Include="doc\Description2.PNG" />
     <Content Include="doc\readme.txt" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -380,7 +369,7 @@
       <LastGenOutput>Entities.cs</LastGenOutput>
     </Content>
     <Content Include="doc\presentation.ppt" />
-    <Content Include="doc\presentation.pdf" />
+    <Content Include="doc\prezentation.pdf" />
     <Content Include="App_Data\Pralna.bak" />
     <None Include="Properties\PublishProfiles\CentralnaPralna - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\CentralnaPralna - Web Deploy.pubxml" />
