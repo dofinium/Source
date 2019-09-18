@@ -369,7 +369,7 @@
       <LastGenOutput>Entities.cs</LastGenOutput>
     </Content>
     <Content Include="doc\presentation.ppt" />
-    <Content Include="doc\prezentation.pdf" />
+    <Content Include="doc\presentation.pdf" />
     <Content Include="App_Data\Pralna.bak" />
     <None Include="Properties\PublishProfiles\CentralnaPralna - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\CentralnaPralna - Web Deploy.pubxml" />
