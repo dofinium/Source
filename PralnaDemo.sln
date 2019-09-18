@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2042
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PralnaDemo", "PralnaDemo\PralnaDemo.csproj", "{D670A9D4-E977-4F08-B50C-CA76034C241C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PublishScripts", "PublishScripts", "{463E850C-5BD9-46A7-93CA-C39EAC5A72FE}"
+	ProjectSection(SolutionItems) = preProject
+		PublishScripts\AzureWebAppPublishModule.psm1 = PublishScripts\AzureWebAppPublishModule.psm1
+		PralnaDemo\doc\PublishProfiles\CentralnaPralna.PublishSettings = PralnaDemo\doc\PublishProfiles\CentralnaPralna.PublishSettings
+		PublishScripts\Publish-WebApplication.ps1 = PublishScripts\Publish-WebApplication.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configurations", "Configurations", "{AED0BEA1-EC99-473E-8160-1D97EF6ED45E}"
+	ProjectSection(SolutionItems) = preProject
+		PublishScripts\Configurations\PralnaDemo-WAWS-dev.json = PublishScripts\Configurations\PralnaDemo-WAWS-dev.json
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D670A9D4-E977-4F08-B50C-CA76034C241C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D670A9D4-E977-4F08-B50C-CA76034C241C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D670A9D4-E977-4F08-B50C-CA76034C241C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D670A9D4-E977-4F08-B50C-CA76034C241C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{AED0BEA1-EC99-473E-8160-1D97EF6ED45E} = {463E850C-5BD9-46A7-93CA-C39EAC5A72FE}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2461B6F5-F4C0-4B43-B7DD-9C039D7B0FC9}
+	EndGlobalSection
+EndGlobal

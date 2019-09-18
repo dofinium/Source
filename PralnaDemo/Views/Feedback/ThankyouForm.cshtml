@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewBag.Title = "Дякуємо!";
+    Layout = "~/Views/Shared/_LayoutEmpty.cshtml";
+}
+
+
+<script type="text/javascript">
+    $(function()
+    {
+        setTimeout("location.href='/Feedback';", 4000);        
+    })
+</script>
+
+<div class="center">
+    <div class="clickable"  title="Зачинити вікно та залишите другий відгук" onclick="location.href='/Feedback'" style="width: 425px; height: 437px; background-image: url('/images/thankyou.png')">
+    </div>
+</div>
+

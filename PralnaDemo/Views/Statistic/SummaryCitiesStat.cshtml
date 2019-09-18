@@ -1,0 +1,145 @@
+﻿@model PralnaDemo.Models.CitiesStatistic
+
+@{
+    PralnaDemo.BusinessLogic.CitiesStatisticOperations cityStatOp = new PralnaDemo.BusinessLogic.CitiesStatisticOperations(Model.db);
+}
+
+<script>
+    FusionCharts.ready(function ()
+    {
+        var summaryCitiesStatChart = new FusionCharts({
+            "type": "stackedcolumn3d",
+            "renderAt": "summaryCitiesChartContainer",
+            "width": "500",
+            "height": "300",
+            "dataFormat": "json",
+            "dataSource": {
+                "chart": {                                               
+                    "aligncaptiontocanvas": "0",
+                    "paletteColors": "#7FFF00, #EE0000",
+                    "yaxisname": "Кількість послуг (%)",
+                    "xaxisname": "Місто",
+                    "caption": "Частки успішності",
+                   /* "subCaption": "по містах", */
+                    "showPercentInTooltip": "0",
+                    "showPlotBorder": "1",
+                    "useDataPlotColorForLabels": "1",
+                    "showsum": "1",
+                   "usePercentDistribution": "0",
+                    "theme": "fint"
+                },
+                "categories": @Html.Raw(cityStatOp.GetSummaryCitiesStat(Model))
+            }
+        });
+
+        summaryCitiesStatChart.render();
+    })
+</script>
+<table>
+    <tr class="graphOuter">
+        <td><div id="summaryCitiesChartContainer"></div></td>
+        <td>
+            <table class="graphStat">
+                <tr class="text-primary">
+                    <td>Місто</td>                   
+                    <td class="text-right">Успішно</td>
+                    <td class="text-right">Неуспішно</td>
+                    <td class="text-right totalCell">Разом</td>
+                </tr>
+                @foreach (PralnaDemo.Models.CityStatistic item in Model.CitiesStats)
+                {
+                    <tr>
+                        <td><a href="/Statistic/City/@item.City.Id">@item.City.Name</a></td>                       
+                        <td class="text-right">
+                            @item.SuccessServicesProvided (@PralnaDemo.Utils.StringOperations.GetPercent(Model.TotalServicesProvided, item.SuccessServicesProvided)%)
+                        </td>
+                        <td class="text-right">
+                            @item.FailedServicesProvided (@PralnaDemo.Utils.StringOperations.GetPercent(Model.TotalServicesProvided, item.FailedServicesProvided)%)
+                        </td>
+                        <td class="text-right totalCell">
+                            @item.ServicesProvided
+                        </td>
+                    </tr>
+                }
+                @*
+                <tr class="totalRow">
+                    <td>Разом</td>
+                    <td class="text-right">@Model.TotalServicesProvided (100%)</td>
+                </tr>
+                    *@
+            </table>
+        </td>
+    </tr>
+
+</table>
+<br />
+
+<script>
+    FusionCharts.ready(function ()
+    {
+        var summaryCitiesStatChartPercent = new FusionCharts({
+            "type": "stackedcolumn3d",
+            "renderAt": "summaryCitiesChartContainerPercent",
+            "width": "500",
+            "height": "300",
+            "dataFormat": "json",
+            "dataSource": {
+                "chart": {
+                    "stack100Percent": "1",
+                    "aligncaptiontocanvas": "0",
+                    "paletteColors": "#7FFF00, #FF6A6A",
+                    "yaxisname": "Кількість послуг (%)",
+                    "xaxisname": "Місто",
+                    "caption": "Співвідношення Негативних / Позитивних відгуків",
+                   /* "subCaption": "по містах", */
+                    "showPercentInTooltip": "0",
+                    "showPlotBorder": "1",
+                    "useDataPlotColorForLabels": "1",
+                    "showsum": "0",
+                   "usePercentDistribution": "0",
+                    "theme": "fint"
+                },
+                "categories": @Html.Raw(cityStatOp.GetSummaryCitiesStat(Model))
+            }
+        });
+
+        summaryCitiesStatChartPercent.render();
+    })
+</script>
+<table>
+    <tr class="graphOuter">
+        <td><div id="summaryCitiesChartContainerPercent"></div></td>
+        <td>
+            <table class="graphStat">
+                <tr class="text-primary">
+                    <td>Місто</td>
+                    <td class="text-right">Успішно</td>
+                    <td class="text-right">Неуспішно</td>
+                    <td class="text-right totalCell">Разом</td>
+                </tr>
+                @foreach (PralnaDemo.Models.CityStatistic item in Model.CitiesStats)
+                {
+                    <tr>
+                        <td><a href="/Statistic/City/@item.City.Id">@item.City.Name</a></td>
+                        <td class="text-right">
+                            @item.SuccessServicesProvided 
+                        </td>
+                        <td class="text-right">
+                            @item.FailedServicesProvided
+                        </td>
+                        <td class="text-right totalCell">
+                            @item.ServicesProvided
+                        </td>
+                    </tr>
+                }
+                @*
+                    <tr class="totalRow">
+                        <td>Разом</td>
+                        <td class="text-right">@Model.TotalServicesProvided (100%)</td>
+                    </tr>
+                *@
+            </table>
+        </td>
+    </tr>
+
+</table>

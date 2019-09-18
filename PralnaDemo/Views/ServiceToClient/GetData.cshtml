@@ -1,0 +1,59 @@
+﻿@model PralnaDemo.Models.ServiceToClient
+
+<script type="text/javascript">
+    $(function ()
+    {
+        $('[data-toggle="tooltip"]').tooltip();
+    })
+</script>
+
+@{
+    if (Model != null)
+    {
+        <div class="serviceCard">
+            <table>
+                <tr>
+                    <td class="text-center" colspan="2"><h4><span class="generalMessage">Картка послуги № <b></b>@Model.UniqueKey<b></b></span></h4><hr /></td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top">
+                        <div><h3><span class="generalMessage">@Html.Raw(PralnaDemo.Utils.StringOperations.convertToHTML(Model.ServiceType.Name))</span></h3></div>
+                        <div class="serviceDescription">@Html.Raw(PralnaDemo.Utils.StringOperations.convertToHTML(Model.ServiceType.Description))</div>
+                    @if(Model.ServiceType.UseTimeLimit.HasValue && Model.ServiceType.UseTimeLimit == true)
+                    {
+                        <br />
+                        <br />
+    <div class="serviceDescription text-success ">Ліміт часу на виконання: @Model.ServiceType.TimeLimit.ToString()</div>
+                    }
+                    
+                    </td>
+                    <td width="30%" class="text-center generalMessage">
+                        Виконувач:<br />
+                        <img style="max-height: 200px; max-width: 200px;" src="@Model.Worker.AspNetUser.Photo" alt="" class="img-thumbnail">
+                        <div data-toggle="tooltip" title="@Model.Worker.WorkPlace.Division.Organization.City.Name.  @Model.Worker.WorkPlace.Division.Organization.Name. @Model.Worker.WorkPlace.Division.Name. @Model.Worker.WorkPlace.Name">@Model.Worker.AspNetUser.Name</div>
+                    </td>
+                </tr>
+
+            </table>
+
+           
+           
+
+        </div>
+
+    }
+    else
+    {
+        <script type="text/javascript">
+            //showNotifyWarn('Для тестування можливо вибрати існуючий квиток за допомогою кнопки з QR кодом (праворуч від поля "Номер послуги")');
+
+            showNotifyError('Такого квитка не існує.');
+
+            $('#temporaryTicketSelector').popover('show');
+
+           
+        </script>
+          <div class="bigTitle text-danger generalMessage">Квиток з таким номером відсутній. Будь ласка, перевірте номер.</div>
+    }
+}
+

@@ -1,0 +1,295 @@
+﻿body {
+    padding-top: 5px;
+    padding-bottom: 20px;    
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select {
+    max-width: 280px;
+}
+
+/* styles for validation helpers */
+.field-validation-error {
+    color: #b94a48;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+input.input-validation-error {
+    border: 1px solid #b94a48;
+}
+
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+.validation-summary-errors {
+    color: #b94a48;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+.bigTitle
+{
+    font-family: Aharoni, Ebrima;
+    font-size: 57px;
+}
+
+.feedbackSelector
+{
+    border: 0px;
+    width: 200px;
+    height: 200px;
+      background-repeat: no-repeat;
+    background-position: center;
+}
+
+.plusSelector
+{
+    background-image: url('/images/plus.png');  
+}
+.plusSelector:hover
+{
+    background-image: url('/images/plusSelected.png');
+}
+.plusSelector.selected
+{
+    background-image: url('/images/plusSelected.png');
+}
+
+.plusSelector.selected:hover
+{
+    background-image: url('/images/plusSelected.png');
+}
+.plusSelector.notSelected
+{
+     background-image: url('/images/plusNotSelected.png');    
+}
+
+
+.minusSelector
+{
+    background-image: url('/images/minus.png');
+}
+.minusSelector.selected
+{
+    background-image: url('/images/minusSelected.png');
+}
+.minusSelector:hover
+{
+    background-image: url('/images/minusSelected.png');
+}
+
+.minusSelector.selected:hover
+{
+    background-image: url('/images/minusSelected.png');
+}
+.minusSelector.notSelected
+{
+     background-image: url('/images/minusNotSelected.png');     
+}
+
+
+
+.clickable
+{
+cursor: pointer;
+}
+
+.selectorTd
+{
+    width: 220px;
+}
+
+#ticketNumber
+{
+    width: 100%;
+    text-align: center;
+    font-size: 24px;
+    max-width: 100%;
+    height: 50px;
+}
+
+.serviceCard 
+{
+    border: 1px solid lightgray;
+    border-radius: 7px;
+    padding: 10px;
+    background-color: lightyellow;
+}
+
+#feedbackFormCardContainer 
+{
+      border: 1px solid lightgray;
+    border-radius: 7px;
+    padding: 10px;
+    background-color: skyblue;
+    margin-top: 10px;
+}
+
+.serviceDescription 
+{
+    font-size: 18px;
+    font-family: Impact, Charcoal, sans-serif
+}
+
+.ticketsList
+{
+    top: -120px;
+    left: 400px;
+    position: absolute;
+     border: 1px solid lightgray;
+    border-radius: 7px;
+    padding: 10px;
+    background-color: white;
+    background-image:url('/images/ticketBackground.png');
+    background-repeat: repeat-y;
+    background-position-x: center;
+}
+
+
+    .ticketsList div 
+    {
+         display: inline-block;
+    }
+
+.ticketHelper
+{
+    margin: 4px;
+    display: inline-block;
+     border: 2px solid black;
+    border-radius: 4px;
+    background-color: greenyellow;
+    padding: 5px;
+}
+
+.ticketHelper:hover{
+    background-color: yellow;
+    font-weight: bold;
+}
+
+.center {
+     margin: auto;
+     width: 40%;    
+    padding: 10px;
+ }
+
+.settingsFloatIcon
+{
+    position: static;
+    top: 10px;
+    margin-right: 10px;
+    float: right
+}
+
+.body-content
+{
+    margin-top: 50px;
+}
+
+.generalMessage
+{
+    font-family: Candara, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#resultMessage
+{
+    margin-top: 10px;
+    position: static;
+    width: 100%;
+   color: black;
+    text-align: center;
+    padding: 20px;
+    border: 1px solid gray;
+    border-radius: 7px;
+    background-color: lightsteelblue;
+}
+
+.noteMessage
+{
+    font-size: 48px;
+    color: black;
+    border-radius:40px;
+}
+
+.noteMessage:hover
+{      
+    font-weight: bold;
+    color: black;
+}
+
+
+#plusNote:hover, #plusNote.selected
+{    
+    background-color:chartreuse;   
+}
+
+
+
+
+#minusNote:hover, #minusNote.selected
+{    
+    background-color:orangered;   
+}
+
+.noteMessage.selected
+{
+color: black;
+}
+
+.noteMessage.notSelected
+{
+color: gray;
+}
+
+.graphStat tr > td
+{
+    padding: 10px;
+}
+
+.totalRow
+{
+    font-weight: bold;
+}
+
+.totalCell
+{
+     font-weight: bold;
+}
+
+.graphOuter
+{    
+    border: 1px solid gainsboro;
+    border-radius: 7px;
+    padding: 10px;
+}
+
+#blocker
+{
+	/*http://ajaxload.info/  http://fgnass.github.io/spin.js/ */
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	opacity: .5;
+	background-color: #000;
+	z-index: 1000;
+	background: url('/images/loadingS.gif') no-repeat center center;
+}
+
+#temporaryTicketSelector.activated
+{
+    border: 7px dashed red;
+}

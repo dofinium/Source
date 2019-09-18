@@ -1,0 +1,49 @@
+﻿@model IEnumerable<PralnaDemo.Models.AllowedViolation>
+
+@{
+        PralnaDemo.Models.ServiceToClient someServiceToClient = ViewBag.ServiceToClient;
+        }
+
+
+<script type="text/javascript">
+    $(function ()
+    {
+        $('[data-toggle="tooltip"]').tooltip();
+    })
+</script>
+
+
+<div id="feedbackFormCardContainer">
+<h4><span class="generalMessage">Будь ласка, вкажить виявленні порушення</span></h4>
+    <hr />
+<form id="feedbackForm">
+
+    @Html.Hidden("ServiceToClientId", someServiceToClient.Id)
+    @Html.Hidden("ClientValue")
+
+    @{
+      
+        foreach (PralnaDemo.Models.AllowedViolation item in Model)
+        {
+            <div>
+                @Html.CheckBox("violationType_" + item.ViolationTypeId, false, new { @onclick = "setViolation(" + someServiceToClient.Id + ", " + item.ViolationTypeId + ")" })
+                <label class="generalMessage" for="violationType_@item.Id">@item.ViolationType.Name</label>
+            </div>
+        }
+        <div>
+            @Html.CheckBox("otherViolationType", false, new { @onclick = "setOtherViolation()" })
+            <label class="generalMessage" for="otherViolationType">Інше</label>
+            <div hidden="hidden" id="commentForViolation_div">
+                @Html.TextArea("CommentForViolation", new { @class = "form-control generalMessage", @placeholder = "Ваш коментар..." })
+            </div>
+        </div>
+
+        <br />
+    <input type="submit" class="btn btn-success" onclick="saveFeedback(@someServiceToClient.Id); return false;" data-toggle="tooltip" title="Зберегти дані (оцінка та перелік виявленних порушень)" value="Зберегти" />
+    <input type="button" class="btn btn-danger" onclick="deleteFeedback(@someServiceToClient.Id); return false;" data-toggle="tooltip" title="Відгук не буде збережено, але Ви завжди взмозі зробити це пізніше" value="Відміна" />
+
+}
+
+</form>
+
+</div>

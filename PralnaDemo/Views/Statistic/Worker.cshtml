@@ -1,0 +1,202 @@
+﻿@model PralnaDemo.Models.WorkerStatistic
+
+@{
+    ViewBag.Title = "Дані по робітнику";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    PralnaDemo.BusinessLogic.WorkerOperations workerOp = new PralnaDemo.BusinessLogic.WorkerOperations(Model.db);
+}
+@Scripts.Render("~/bundles/fusioncharts")
+<script src="/scripts/pralna.js"></script>
+
+
+
+<h5>
+    <a href="/Statistic/Cities/">
+        Усі міста
+    </a> >
+    <a title="По місту в цілому" href="/Statistic/City/@Model.Worker.WorkPlace.Division.Organization.City.Id">
+        @Model.Worker.WorkPlace.Division.Organization.City.Name
+    </a> > 
+    <a title="По організації в цілому" href="/Statistic/Organization/@Model.Worker.WorkPlace.Division.OrganizationId">
+        @Model.Worker.WorkPlace.Division.Organization.Name
+    </a> > 
+    <a title="По відділу в цілому" href="/Statistic/Division/@Model.Worker.WorkPlace.DivisionId">
+        @Model.Worker.WorkPlace.Division.Name
+    </a> > 
+    <a title="По посаді в цілому" href="/Statistic/Workplace/@Model.Worker.WorkPlaceId">
+        @Model.Worker.WorkPlace.Name
+    </a>
+</h5>
+<div class="row">
+    <img style="max-height: 200px; max-width: 200px;" src="@Model.Worker.AspNetUser.Photo" alt="" class="img-thumbnail">
+    <h4>@Model.Worker.AspNetUser.Name</h4>
+</div>
+
+
+
+<script>
+    FusionCharts.ready(function ()
+    {
+        var summaryIndexChart = new FusionCharts({
+            type: 'angulargauge',
+            renderAt: 'summary-chart-container',
+            width: '400',
+            height: '250',
+            dataFormat: 'json',
+            dataSource: {
+                "chart": {
+                    "caption": "Рівень незадоволеності якістю послуг",
+                    "subcaption": "@Html.Raw(Model.Worker.AspNetUser.Name)",
+                    "showValue": "1",
+                    "lowerLimit": "0",
+                    "upperLimit": "100",
+                    "gaugeFillMix": "{dark-30},{light-60},{dark-10}",
+                    "gaugeFillRatio": "15",
+                    "theme": "fint"
+                },
+                "colorRange": {
+                    "color": [
+                        {
+                            "minValue": "0",
+                            "maxValue": "50",
+                            "code": "#6baa01"
+                        },
+                        {
+                            "minValue": "50",
+                            "maxValue": "75",
+                            "code": "#f8bd19"
+                        },
+                        {
+                            "minValue": "75",
+                            "maxValue": "100",
+                            "code": "#e44a00"
+                        }
+                    ]
+                },
+                "dials": {
+                    "dial": [{
+                        "value": "@Model.SummaryIndex.ToString("0.##")"
+                    }]
+                }
+            }
+        });
+        summaryIndexChart.render();
+    })
+</script>
+
+<table>
+    <tr class="graphOuter">
+        <td>
+            <div id="summary-chart-container"></div>
+        </td>
+        <td>
+            <table class="graphStat">
+                <tr class="text-primary">
+                    <td colspan="2">Відгуків</td>
+                </tr>
+                <tr>
+                    <td>Позитивних</td>
+                    <td>@Model.SuccessServicesProvided (@PralnaDemo.Utils.StringOperations.GetPercent(Model.ServicesProvided, Model.SuccessServicesProvided)%)</td>
+                </tr>
+                <tr>
+                    <td>Негативних</td>
+                    <td>@Model.FailedServicesProvided (@PralnaDemo.Utils.StringOperations.GetPercent(Model.ServicesProvided, Model.FailedServicesProvided)%)</td>
+                </tr>
+                <tr class="totalRow">
+                    <td>Разом</td>
+                    <td>@Model.ServicesProvided</td>
+                </tr>
+            </table>
+
+        </td>
+    </tr>
+
+</table>
+<br />
+
+
+
+
+<script>
+    FusionCharts.ready(function ()
+    {
+        var servicesDetailsChart = new FusionCharts({
+            type: 'stackedcolumn3dlinedy',
+            renderAt: 'serviceDetailsContainer',
+            width: '400',
+            height: '250',
+            dataFormat: 'json',
+            dataSource: {
+                "chart": {
+                    "caption": "Рівень задоволеності якістю по послугах",
+                    "subcaption": "@Html.Raw(Model.Worker.AspNetUser.Name)",
+                    "showvalues": "0",
+                    "paletteColors": "#6baa01, #e44a00",
+                    "xaxisname": "Послуги",
+                    "yaxisname": "Відгуків",
+                    "useroundedges": "1",
+                    "showborder": "0",
+                    "sNumberSuffix": "%"
+                },
+                @Html.Raw(workerOp.RenderFeedbacksByServicesTypesStatistic(Model.Worker.Id))
+            }
+        });
+        servicesDetailsChart.render();
+    })
+</script>
+
+<table>
+    <tr class="graphOuter">
+        <td>
+            <div id="serviceDetailsContainer"></div>
+        </td>
+        <td>
+            <table class="graphStat">
+                <tr class="text-primary">
+                    <td>
+                        Послуга
+                    </td>
+                    <td>
+                        Позитивних відгуків
+                    </td>
+                    <td>
+                        Негативних відгуків
+                    </td>
+                    <td>
+                        Рівень задоволеності, %
+                    </td>
+                </tr>
+                @{
+                    foreach (PralnaDemo.Models.ServicesData item in Model.ServiceData)
+                    {
+                        <tr>
+                            <td>
+                                @item.ServiceType.Name
+                            </td>
+                            <td>
+                                <a href="#" onclick="loadWorkerServicesToClients(@Model.Worker.Id, @item.ServiceType.Id, 1); return false;">
+                                    @item.ServicesToClients.Where(m => m.Value == 1).Count()
+                                </a>
+                            </td>
+                            <td>
+                                <a href="#" onclick="loadWorkerServicesToClients(@Model.Worker.Id, @item.ServiceType.Id, -1); return false;">
+                                    @item.ServicesToClients.Where(m => m.Value == -1).Count()
+                                </a>
+                            </td>
+                            <td>
+                                @PralnaDemo.Utils.StringOperations.GetPercent(item.ServicesToClients.Where(m => m.ValueSet.HasValue).Count(), item.ServicesToClients.Where(m => m.Value == 1).Count())
+                            </td>
+                        </tr>
+                    }
+                }
+            </table>
+
+        </td>
+    </tr>
+
+</table>
+<br />
+
+
+
+<div id="servicesList_div"></div>

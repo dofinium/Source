@@ -1,0 +1,299 @@
+﻿@model PralnaDemo.Models.CityStatistic
+
+@{
+    ViewBag.Title = "Статистика по місту";
+    Layout = "~/Views/Shared/_Layout.cshtml";   
+}
+
+@Scripts.Render("~/bundles/fusioncharts")
+
+<h5>
+    <a href="/Statistic/Cities/">
+        Усі міста
+    </a> >
+      @Model.City.Name  
+</h5>
+
+
+
+
+<script>
+    FusionCharts.ready(function ()
+    {
+        var summaryIndexChart = new FusionCharts({
+            type: 'angulargauge',
+            renderAt: 'summary-chart-container',
+            width: '400',
+            height: '250',
+            dataFormat: 'json',
+            dataSource: {
+                "chart": {
+                    "caption": "Рівень незадоволеності якістю послуг по місту",
+                    "subcaption": "@Model.City.Name",
+                    "showValue": "1",
+                    "lowerLimit": "0",
+                    "upperLimit": "100",
+                    "gaugeFillMix": "{dark-30},{light-60},{dark-10}",
+                    "gaugeFillRatio": "15",
+                    "theme": "fint"
+                },
+                "colorRange": {
+                    "color": [
+                        {
+                            "minValue": "0",
+                            "maxValue": "50",
+                            "code": "#6baa01"                           
+                        },
+                        {
+                            "minValue": "50",
+                            "maxValue": "75",
+                            "code": "#f8bd19"
+                        },
+                        {
+                            "minValue": "75",
+                            "maxValue": "100",
+                            "code": "#e44a00"
+                        }
+                    ]
+                },
+                "dials": {
+                    "dial": [{
+                        "value": "@Model.SummaryIndex"
+                    }]
+                }
+            }       
+        });
+        summaryIndexChart.render();
+    })
+</script>
+
+<br />
+<a id="notSatisfied" name="notSatisfied"></a>
+<table>
+    <tr class="graphOuter">
+        <td>
+            <div id="summary-chart-container"></div>
+        </td>
+        <td>
+            <table class="graphStat">
+                <tr class="text-primary">                    
+                    <td colspan="2">Відгуки</td>
+                </tr>                
+                    <tr>
+                        <td><a href="#satisfied">Задовільно</a></td>
+                        <td>@Model.SuccessServicesProvided (@PralnaDemo.Utils.StringOperations.GetPercent(Model.ServicesProvided, Model.SuccessServicesProvided)%)</td>                      
+                    </tr>
+                <tr>
+                    <td><a href="#notSatisfied">Не задовільно</a></td>
+                    <td>@Model.FailedServicesProvided (@PralnaDemo.Utils.StringOperations.GetPercent(Model.ServicesProvided, Model.FailedServicesProvided)%)</td>
+                </tr>
+                <tr class="totalRow">
+                    <td>Разом</td>
+                    <td>@Model.ServicesProvided</td>
+                </tr>                
+            </table>
+
+        </td>
+    </tr>
+
+</table>
+<br />
+
+
+
+
+<script>
+    FusionCharts.ready(function ()
+    {
+        var worstOrganizationsChart = new FusionCharts({
+            "type": "bar3d",
+            "renderAt": "worstOrganizations",
+            "width": "500",
+            "height": "300",
+            "dataFormat": "json",
+            "dataSource": {
+                "chart": {
+                    "caption": "Організації, послугами якіх найбільш незадоволені",
+                    "yAxisName": "Негативні відгуки",                   
+                    "paletteColors": "#EE0000",
+                    "bgColor": "#ffffff",
+                    "showBorder": "0",
+                    "showCanvasBorder": "0",
+                    "usePlotGradientColor": "0",
+                    "plotBorderAlpha": "10",
+                    "placeValuesInside": "1",
+                    "valueFontColor": "#ffffff",
+                    "showAxisLines": "1",
+                    "axisLineAlpha": "25",
+                    "divLineAlpha": "10",
+                    "alignCaptionWithCanvas": "0",
+                    "showAlternateVGridColor": "0",
+                    "captionFontSize": "14",
+                    "subcaptionFontSize": "14",
+                    "subcaptionFontBold": "0",
+                    "toolTipColor": "#ffffff",
+                    "toolTipBorderThickness": "0",
+                    "toolTipBgColor": "#000000",
+                    "toolTipBgAlpha": "80",
+                    "toolTipBorderRadius": "2",
+                    "toolTipPadding": "5", 
+                    "theme": "fint"
+                },
+                "data": @Html.Raw(ViewBag.OrganizationStatistic)
+            }
+        });
+
+        worstOrganizationsChart.render();
+    })
+</script>
+
+<table>
+    <tr class="graphOuter">
+        <td>           
+            <div id="worstOrganizations"></div>
+        </td>
+        <td>
+            <table class="graphStat">
+                <tr class="text-primary">
+                    <td>Організація</td>
+                    <td>Негативних відгуків</td>
+                </tr>
+                @foreach (PralnaDemo.Models.OrganizationStatistic item in Model.OrganizationStatistic.OrderByDescending(m => m.FailedServices))
+                {
+                    <tr>
+                        <td><a href="/Statistic/Organization/@item.Organization.Id">@item.Organization.Name</a> </td>
+                        <td>@item.FailedServices</td>
+                    </tr>
+                }
+            </table>
+
+        </td>
+    </tr>
+
+</table>
+
+
+
+
+<script>
+    FusionCharts.ready(function ()
+    {
+        var bestOrganizationsChart = new FusionCharts({
+            "type": "bar3d",
+            "renderAt": "bestOrganizations",
+            "width": "500",
+            "height": "300",
+            "dataFormat": "json",
+            "dataSource": {
+                "chart": {
+                    "caption": "Організації, послугами якіх найбільш задоволені",
+                    "yAxisName": "Позитивні відгуки",
+                    "paletteColors": "#7FFF00",
+                    "bgColor": "#ffffff",
+                    "showBorder": "0",
+                    "showCanvasBorder": "0",
+                    "usePlotGradientColor": "0",
+                    "plotBorderAlpha": "10",
+                    "placeValuesInside": "1",
+                    "valueFontColor": "#ffffff",
+                    "showAxisLines": "1",
+                    "axisLineAlpha": "25",
+                    "divLineAlpha": "10",
+                    "alignCaptionWithCanvas": "0",
+                    "showAlternateVGridColor": "0",
+                    "captionFontSize": "14",
+                    "subcaptionFontSize": "14",
+                    "subcaptionFontBold": "0",
+                    "toolTipColor": "#ffffff",
+                    "toolTipBorderThickness": "0",
+                    "toolTipBgColor": "#000000",
+                    "toolTipBgAlpha": "80",
+                    "toolTipBorderRadius": "2",
+                    "toolTipPadding": "5",
+                    "theme": "fint"
+                },
+                "data": @Html.Raw(ViewBag.BestOrganizationStatistic)
+            }
+        });
+
+        bestOrganizationsChart.render();
+    })
+</script>
+
+<br />
+<a id="satisfied" name="satisfied"></a>
+<table>
+    <tr class="graphOuter">
+        <td>          
+            <div id="bestOrganizations"></div>
+        </td>
+        <td>
+            <table class="graphStat">
+                <tr class="text-primary">
+                    <td>Організація</td>
+                    <td>Позитивних відгуків</td>
+                </tr>
+                @foreach (PralnaDemo.Models.OrganizationStatistic item in Model.OrganizationStatistic.OrderByDescending(m => m.SuccessServices))
+                {
+                    <tr>
+                        <td><a href="/Statistic/Organization/@item.Organization.Id">@item.Organization.Name</a> </td>
+                        <td>@item.SuccessServices</td>
+                    </tr>
+                }
+            </table>
+
+        </td>
+    </tr>
+
+</table>
+
+
+<br />
+<script>
+	FusionCharts.ready(function ()
+	{
+		var treemapChart = new FusionCharts({
+			"type": "treemap",
+			"renderAt": "treeMapContainer",
+			"width": "700",
+			"height": "500",
+			"dataFormat": "json",
+			"dataSource": {
+				"chart": {
+					"caption": "Загальна мапа по місту",
+					"paletteColors": "#EE0000, #7FFF00",
+
+					"animation": "0",
+					"hideTitle": "1",
+					"plotToolText": "<div><b>$label</b><br/> <b>Послуг: </b>$value<br/><b>Рівень незадоволеності: </b>$svalue%</div>",				
+					"spacex": "0",
+					"spacey": "0",
+					"horizontalPadding": "1",
+					"verticalPadding": "1",
+					"hoveronallsiblingleaves": "1",
+					"plotborderthickness": ".5",
+					"plotbordercolor": "666666",
+					"legendpadding": "0",
+					"legendItemFontSize": "10",
+					"legendItemFontBold": "1",
+					"showLegend": "1",
+					"legendPointerWidth": "8",
+					"legenditemfontcolor": "3d5c5c",
+					"algorithm": "squarified",
+               
+					"legendScaleLineThickness": "0",
+					"legendCaptionFontSize": "10",
+					"subcaption": "Рівень задоволеності по відділам організацій",
+					"legendCaption": "Фильтр по рівню незадоволеності",
+					"theme": "zune"
+
+                  
+				},
+				"data": @Html.Raw(Model.TreeMapData)
+                }
+        });
+
+    	treemapChart.render();
+    })
+</script>
+<div id="treeMapContainer"></div>

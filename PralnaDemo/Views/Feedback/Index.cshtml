@@ -1,0 +1,56 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutEmpty.cshtml";
+}
+<script src="/scripts/pralna.js"></script>
+
+<div class="row">
+    <div class="col-md-6">
+        <table id="feedbackTable">
+            <tr>
+                <td colspan="2"><p class="bigTitle generalMessage text-center">Усе сподобалося?</p></td>
+            </tr>
+            <tr>
+                <td colspan="2" class="text-center">
+                   @* <h4>Будь ласка, вкажить номер квитка</h4>*@
+                    <div class="form-group" id="ticketSelectorContainer">
+                        @Html.TextBox("ticketNumber", null, new { @onkeyup = "checkTicketNumber();", @class = "form-control generalMessage", @placeholder = "номер послуги", @style = "maxlength: 6", @title = "Для вибіру існуючого квитка, можливо скористатися кнопкою праворуч" })
+                        <div id="temporaryTicketSelector" style="float: right; top: -33px; left: 28px" data-placement="left" title="Виберіть квиток зі спіску" data-content="Має бути скановано автоматично але зараз можливо вручну вибрати існуючий квиток (для тестування)" onclick="showTicketsList();" class="clickable glyphicon glyphicon-qrcode"></div>
+                    </div>
+                    <div id="ticketsList_container" style="position: absolute; ">
+                    </div>
+                    <label class="text-warning generalMessage" id="statusLabel"></label>
+                </td>
+            </tr>
+            <tr>
+                <td class="selectorTd">
+                    <p class="plusContainer text-center">
+                        <div onclick="selectPlus();" data-toggle="tooltip" title="Натисніть, якщо повністю задоволені якістю отриманої послуги. Якщо пізніше виявиться проблема, Ви зможете змініти оцінку." class="clickable plusSelector feedbackSelector img-circle"></div>
+                    </p>
+                </td>
+                <td class="selectorTd">
+                    <p class="minusContainer text-center">
+                        <div onclick="selectMinus();" data-toggle="tooltip" title="Натисніть, якщо не повністю задоволені якістю отриманої послуги та бажаєте вказати причини." class="clickable minusSelector feedbackSelector img-circle"></div>
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p id="plusNote" onclick="selectPlus();" class="noteMessage clickable plusContainer bigTitle text-center generalMessage">ТАК</p>
+                </td>
+                <td>
+                    <p id="minusNote" onclick="selectMinus();" class="noteMessage clickable minusContainer bigTitle text-center generalMessage">НІ</p>
+                </td>
+            </tr>
+          
+        </table>
+    </div>
+    <div class="col-md-6">       
+        <div id="serviceDetails">
+        </div>
+        <div id="feedbackForm_container">
+        </div>
+        <div class="bigTitle generalMessage center" hidden id="resultMessage">
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,6 @@
+
+production db добавить Discriminator field
+
+
+
+

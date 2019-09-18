@@ -1,0 +1,12 @@
+﻿@model IEnumerable<PralnaDemo.Models.ServiceToClient>
+
+
+                <div class="ticketsList">
+                    @{
+                        foreach (PralnaDemo.Models.ServiceToClient item in Model)
+                        {
+                            <div class="ticketHelper clickable" onclick="selectTicketFromList('@item.UniqueKey')"><span class="glyphicon glyphicon-qrcode"></span> @item.UniqueKey</div>
+                        }
+                    }
+                </div>
+           

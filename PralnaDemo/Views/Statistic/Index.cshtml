@@ -1,0 +1,20 @@
+﻿
+@{
+    ViewBag.Title = "Статистика";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Статистика</h2>
+
+@Html.ActionLink("По містах", "Cities", "Statistic")
+<br />
+@Html.ActionLink("По місту", "City", "Statistic", new  {id = 1 }, null)
+<br />
+@Html.ActionLink("По організації", "Organization", "Statistic", new { id = 1 }, null)
+<br />
+@Html.ActionLink("По відділу", "Division", "Statistic", new { id = 1 }, null)
+<br />
+@Html.ActionLink("По посаді", "Workplace", "Statistic", new { id = 1 }, null)
+<br />
+@Html.ActionLink("По робітнику", "Worker", "Statistic", new { id = 1 }, null)
+<br />

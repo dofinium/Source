@@ -1,0 +1,113 @@
+﻿@model PralnaDemo.Models.ServiceToClient
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>ServiceToClient</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Value)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Value)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UniqueKey)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UniqueKey)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ValueSet)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ValueSet)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsCallbackAllowed)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsCallbackAllowed)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ClientFeedback)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ClientFeedback)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Assigned)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Assigned)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Started)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Started)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Finished)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Finished)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Worker.AspNetUserId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Worker.AspNetUserId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ServiceType.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ServiceType.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Client.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Client.UserName)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

@@ -1,0 +1,49 @@
+﻿@model  IEnumerable<PralnaDemo.Models.ServiceToClient>
+
+@if (ViewBag.IsSuccess == false)
+{
+    <h4>Негативні відгуки</h4>
+    <table class="table table-striped table-hover">
+        <tr class="text-primary">
+            <td>№ квитка</td>
+            <td>Дата</td>
+            <td>
+                Порушення
+            </td>
+            <td>Коментар</td>
+        </tr>
+
+        @foreach (PralnaDemo.Models.ServiceToClient item in Model)
+        {
+            <tr>
+                <td>@item.UniqueKey</td>
+                <td>@item.ValueSet</td>
+                <td>
+                    @foreach (PralnaDemo.Models.FoundViolation violationItem in item.FoundViolations)
+                    {
+                        <span>@violationItem.ViolationType.Name</span>
+                    }
+                </td>
+                <td>@item.ClientFeedback</td>
+            </tr>
+        }
+
+    </table>
+}
+else if (ViewBag.IsSuccess == true)
+{
+    <h4>Позитивні відгуки</h4>
+    <table class="table table-striped table-hover">
+        <tr class="text-primary">
+            <td>№ квитка</td>
+            <td>Дата</td>
+           </tr>
+            @foreach (PralnaDemo.Models.ServiceToClient item in Model)
+            {
+                <tr>
+                    <td>@item.UniqueKey</td>
+                    <td>@item.ValueSet</td>
+                </tr>           
+            }
+        </table>
+ }

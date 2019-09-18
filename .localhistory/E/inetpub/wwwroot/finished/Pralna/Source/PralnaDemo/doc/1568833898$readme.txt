@@ -1,0 +1,9 @@
+
+production db добавить Discriminator field
+
+
+
+
+eterioshop@outlook.com
+
+azure publish profile

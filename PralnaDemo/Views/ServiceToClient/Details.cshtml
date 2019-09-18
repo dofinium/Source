@@ -1,0 +1,107 @@
+﻿@model PralnaDemo.Models.ServiceToClient
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ServiceToClient</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Value)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Value)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UniqueKey)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UniqueKey)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ValueSet)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ValueSet)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsCallbackAllowed)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsCallbackAllowed)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ClientFeedback)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ClientFeedback)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Assigned)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Assigned)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Started)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Started)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Finished)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Finished)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Worker.AspNetUserId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Worker.AspNetUserId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ServiceType.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ServiceType.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Client.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Client.UserName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

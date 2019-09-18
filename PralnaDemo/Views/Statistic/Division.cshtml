@@ -1,0 +1,184 @@
+﻿@model PralnaDemo.Models.DivisionStatistic
+
+@{
+    ViewBag.Title = "Дані по відділу";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    PralnaDemo.BusinessLogic.DivisionsOperations divisionOp = new PralnaDemo.BusinessLogic.DivisionsOperations(Model.db);
+     PralnaDemo.Models.DivisionStatistic someDivisionStat = divisionOp.GetDivisionStatistic(Model.Division.Id, false);
+     divisionOp.FillWorkplacesStatistic(someDivisionStat);  
+}
+@Scripts.Render("~/bundles/fusioncharts")
+
+<h5>
+    <a href="/Statistic/Cities/">
+        Усі міста
+    </a> >
+    <a title="По місту в цілому" href="/Statistic/City/@Model.Division.Organization.City.Id">
+        @Model.Division.Organization.City.Name
+    </a> >
+    <a title="По організації в цілому" href="/Statistic/Organization/@Model.Division.OrganizationId">
+        @Model.Division.Organization.Name
+    </a> >    
+        @Model.Division.Name   
+</h5>
+
+
+
+
+<script>
+    FusionCharts.ready(function ()
+    {
+        var summaryIndexChart = new FusionCharts({
+            type: 'angulargauge',
+            renderAt: 'summary-chart-container',
+            width: '400',
+            height: '250',
+            dataFormat: 'json',
+            dataSource: {
+                "chart": {
+                    "caption": "Рівень незадоволеності якістю послуг відділу",
+                    "subcaption": "@Model.Division.Name",
+                    "showValue": "1",
+                    "lowerLimit": "0",
+                    "upperLimit": "100",
+                    "gaugeFillMix": "{dark-30},{light-60},{dark-10}",
+                    "gaugeFillRatio": "15",
+                    "theme": "fint"
+                },
+                "colorRange": {
+                    "color": [
+                        {
+                            "minValue": "0",
+                            "maxValue": "50",
+                            "code": "#6baa01"
+                           
+                        },
+                        {
+                            "minValue": "50",
+                            "maxValue": "75",
+                            "code": "#f8bd19"
+                        },
+                        {
+                            "minValue": "75",
+                            "maxValue": "100",
+                            "code": "#e44a00"                            
+                        }
+                    ]
+                },
+                "dials": {
+                    "dial": [{
+                        "value": "@Model.SummaryIndex.ToString("0.##")"
+                    }]
+                }
+            }
+        });
+        summaryIndexChart.render();
+    })
+</script>
+
+<br />
+<table>
+    <tr class="graphOuter">
+        <td>
+            <div id="summary-chart-container"></div>
+        </td>
+        <td>
+            <table class="graphStat">
+                <tr class="text-primary">
+                    <td colspan="2">Відгуків</td>
+                </tr>
+                <tr>
+                    <td>Задовільно</td>
+                    <td>@Model.SuccessServicesProvided (@PralnaDemo.Utils.StringOperations.GetPercent(Model.ServicesProvided, Model.SuccessServicesProvided)%)</td>
+                </tr>
+                <tr>
+                    <td>Не задовільно</td>
+                    <td>@Model.FailedServicesProvided (@PralnaDemo.Utils.StringOperations.GetPercent(Model.ServicesProvided, Model.FailedServicesProvided)%)</td>
+                </tr>
+                <tr class="totalRow">
+                    <td>Разом</td>
+                    <td>@Model.ServicesProvided</td>
+                </tr>
+            </table>
+
+        </td>
+    </tr>
+
+</table>
+<br />
+
+
+
+<script>
+    FusionCharts.ready(function ()
+    {
+        var worstWorkplaces = new FusionCharts({
+            "type": "bar3d",
+            "renderAt": "worstWorkplacesContainer",
+            "width": "500",
+            "height": "300",
+            "dataFormat": "json",
+            "dataSource": {
+                "chart": {
+                    "caption": "Посади з найбільшою кількостю негативних відгуків",                   
+                    "yAxisName": "Негативні відгуки, %",
+                    "paletteColors": "#EE0000",
+                    "bgColor": "#ffffff",
+                    "showBorder": "0",
+                    "showCanvasBorder": "0",
+                    "usePlotGradientColor": "0",
+                    "plotBorderAlpha": "10",
+                    "placeValuesInside": "1",
+                    "valueFontColor": "#ffffff",
+                    "showAxisLines": "1",
+                    "axisLineAlpha": "25",
+                    "divLineAlpha": "10",
+                    "alignCaptionWithCanvas": "0",
+                    "showAlternateVGridColor": "0",
+                    "captionFontSize": "14",
+                    "subcaptionFontSize": "14",
+                    "subcaptionFontBold": "0",
+                    "toolTipColor": "#ffffff",
+                    "toolTipBorderThickness": "0",
+                    "toolTipBgColor": "#000000",
+                    "toolTipBgAlpha": "80",
+                    "toolTipBorderRadius": "2",
+                    "toolTipPadding": "5",
+                    "theme": "fint"
+                },
+                "data": @Html.Raw(divisionOp.RenderWorkplacesStatistic(someDivisionStat))
+            }
+        });
+
+        worstWorkplaces.render();
+    })
+</script>
+
+<table>
+    <tr class="graphOuter">
+        <td>
+            <div id="worstWorkplacesContainer"></div>
+        </td>
+        <td>
+            <table class="graphStat">
+                <tr class="text-primary">
+                    <td>Посада</td>
+                    <td>Незадоволеність</td>
+                    <td>Відгуків позитивних</td>
+                    <td>Відгуків негативних</td>                            
+                </tr>
+                @foreach (PralnaDemo.Models.WorkplaceStatistic item in Model.WorkplaceStatistics.OrderByDescending(m => m.SummaryIndex))
+                {
+                    <tr>
+                        <td><a href="/Statistic/Workplace/@item.WorkPlace.Id">@item.WorkPlace.Name</a> </td>
+                        <td>@item.SummaryIndex.ToString("0.##") %</td>
+                        <td>@item.SuccessServicesProvided</td>
+                        <td>@item.FailedServicesProvided</td>
+                    </tr>
+                }
+            </table>
+
+        </td>
+    </tr>
+</table>
+

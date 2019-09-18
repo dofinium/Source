@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Чекаємо на Ваш відгук! ("Центральна пральня")</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery") @* must be here for jquery.ready correct work*@
+
+</head>
+<body>
+    <a href="/Reference" target="_blank" class="settingsFloatIcon glyphicon glyphicon-asterisk clickable" title="Довідникі" ></a>
+    <a href="/Statistic/Cities" target="_blank" class="settingsFloatIcon glyphicon glyphicon-indent-left clickable" title="Показники" ></a>
+    <a href="/doc/prezentation.pdf" target="_blank" class="settingsFloatIcon glyphicon glyphicon-film clickable" title="Презентація"></a>
+    <div class="container body-content">
+        @RenderBody()            
+    </div>
+    
+    @Scripts.Render("~/bundles/jquery-ui")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/notify")
+    @Scripts.Render("~/bundles/autosize")
+    @Scripts.Render("~/bundles/utils")
+    @RenderSection("scripts", required: false)
+    <div id="blocker" hidden></div>   
+</body>
+</html>
